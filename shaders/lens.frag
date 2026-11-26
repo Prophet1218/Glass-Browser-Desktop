@@ -66,8 +66,8 @@ void main() {
     float r = sampleBlur(base + off * 1.06, texel, blur).r;
     vec4 gs = sampleBlur(base + off, texel, blur);
     float b = sampleBlur(base + off * 0.94, texel, blur).b;
-    float a = max(gs.a, 0.001);
-    vec3 col = vec3(r, gs.g, b) / a;   // egyenes szín
+    // egyenes szín; nagyon kis alfánál nem osztunk (a 8 bites kerekítés kockásodást okozna)
+    vec3 col = vec3(r, gs.g, b) / max(gs.a, 0.25);
 
     // dér – a fényes tartalom fölött sötét üvegnél erősebb (és fordítva), hogy az ikonok olvashatók maradjanak
     float lum = dot(col, vec3(0.299, 0.587, 0.114));
