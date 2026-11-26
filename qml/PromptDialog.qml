@@ -56,8 +56,8 @@ Item {
             spacing: 12
             Text { text: dlg.title; color: G.text; font.pixelSize: 18; font.weight: Font.DemiBold; width: parent.width; wrapMode: Text.WordWrap; visible: text !== "" }
             Text { text: dlg.message; color: G.subtext; font.pixelSize: 14; width: parent.width; wrapMode: Text.WordWrap; visible: text !== "" }
-            Field { id: f1; visible: dlg.showField1; hint: dlg.field1Hint; onAccepted: dlg.showField2 ? f2.focusIn() : dlg.accept(); onEscape: dlg.reject() }
-            Field { id: f2; visible: dlg.showField2; hint: dlg.field2Hint; onAccepted: dlg.accept(); onEscape: dlg.reject() }
+            Field { id: f1; visible: dlg.showField1; hint: dlg.field1Hint; onAccepted: dlg.showField2 ? f2.focusIn() : dlg.accept(); onEscaped: dlg.reject() }
+            Field { id: f2; visible: dlg.showField2; hint: dlg.field2Hint; onAccepted: dlg.accept(); onEscaped: dlg.reject() }
             Item { width: 1; height: 4 }
             Row {
                 anchors.right: parent.right
@@ -75,7 +75,7 @@ Item {
         signal accepted()
         function selectAll() { inp.selectAll() }
         function focusIn() { inp.forceActiveFocus() }
-        signal escape()
+        signal escaped()
         width: parent.width; height: 42; radius: 21
         color: G.dark ? Qt.rgba(1, 1, 1, 0.08) : Qt.rgba(0, 0, 0, 0.06)
         border.color: inp.activeFocus ? G.accent : G.line
@@ -86,7 +86,7 @@ Item {
             color: G.text; font.pixelSize: 14; clip: true
             selectByMouse: true; selectionColor: G.accent
             onAccepted: fr.accepted()
-            Keys.onEscapePressed: fr.escape()
+            Keys.onEscapePressed: fr.escaped()
         }
         Text { anchors.fill: inp; verticalAlignment: Text.AlignVCenter; text: fr.hint; color: G.subtext; font.pixelSize: 14; visible: inp.text === "" }
     }
