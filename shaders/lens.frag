@@ -69,8 +69,10 @@ void main() {
     float a = max(gs.a, 0.001);
     vec3 col = vec3(r, gs.g, b) / a;   // egyenes szín
 
-    // dér
-    col = mix(col, tint.rgb, tintAlpha);
+    // dér – a fényes tartalom fölött sötét üvegnél erősebb (és fordítva), hogy az ikonok olvashatók maradjanak
+    float lum = dot(col, vec3(0.299, 0.587, 0.114));
+    float adapt = mix((1.0 - lum) * 0.35, lum * 0.55, dark);
+    col = mix(col, tint.rgb, clamp(tintAlpha + adapt * (1.0 - tintAlpha), 0.0, 1.0));
     float outA = clamp(mix(gs.a, 1.0, tintAlpha * 0.9) + 0.06, 0.0, 1.0);
     // fényesség kicsit fel (vagy le sötét üvegnél)
     col = mix(col * (1.0 + 0.10 * (1.0 - dark)), col * 0.92, dark * 0.3);

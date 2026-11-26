@@ -35,7 +35,7 @@ Item {
         width: size; height: size
         x: pw * bx - size / 2 + Math.sin(t + ph) * pw * 0.06
         y: phh * by - size / 2 + Math.cos(t * 0.8 + ph) * phh * 0.07
-        preferredRendererType: Shape.CurveRenderer
+        preferredRendererType: Shape.GeometryRenderer
         ShapePath {
             strokeColor: "transparent"
             strokeWidth: 0
