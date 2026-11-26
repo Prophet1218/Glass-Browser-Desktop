@@ -1,0 +1,20 @@
+[Desktop Entry]
+Type=Application
+Name=Glass Browser
+GenericName=Web Browser
+GenericName[hu]=Webböngésző
+Comment=Liquid glass web browser built on Chromium
+Comment[hu]=Folyékony üveg webböngésző Chromium alapon
+Exec=glass-browser-desktop %U
+Icon=glass-browser-desktop
+Terminal=false
+StartupNotify=true
+StartupWMClass=glass-browser-desktop
+Categories=Network;WebBrowser;
+MimeType=text/html;application/xhtml+xml;x-scheme-handler/http;x-scheme-handler/https;
+Actions=new-window;
+
+[Desktop Action new-window]
+Name=New window
+Name[hu]=Új ablak
+Exec=glass-browser-desktop

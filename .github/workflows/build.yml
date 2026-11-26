@@ -1,0 +1,67 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    steps:
+      - name: Install dependencies
+        run: |
+          pacman -Syu --noconfirm --needed base-devel cmake git github-cli \
+            qt6-base qt6-declarative qt6-webengine qt6-shadertools kwindowsystem \
+            xorg-server-xvfb xorg-xauth mesa ttf-dejavu noto-fonts
+
+      - uses: actions/checkout@v4
+
+      - name: Build package
+        run: |
+          VER=$(grep -oP 'project\(glass-browser-desktop VERSION \K[0-9.]+' CMakeLists.txt)
+          sed -i "s/^pkgver=.*/pkgver=$VER/" PKGBUILD
+          useradd -m builder
+          chown -R builder:builder .
+          sudo -u builder makepkg -f --noconfirm
+          ls -la *.pkg.tar.zst
+
+      - name: Smoke test with screenshots
+        run: |
+          pacman -U --noconfirm ./*.pkg.tar.zst
+          mkdir -p shots
+          export QTWEBENGINE_DISABLE_SANDBOX=1 QT_QPA_PLATFORM=xcb LIBGL_ALWAYS_SOFTWARE=1
+          export GLASS_SCREENSHOT="$PWD/shots/shot.png"
+          xvfb-run -a -s "-screen 0 1440x900x24" timeout 120 glass-browser-desktop > run.log 2>&1 || true
+          cat run.log
+          if grep -E "\.qml:[0-9]+" run.log | grep -E "Error|is not a type|Cannot assign|Unable to assign|is not defined|Non-existent|Invalid|unavailable|not installed|Cannot override|failed|Unknown"; then
+            echo "::error::QML errors found"; exit 1
+          fi
+          test -f shots/shot.png || { echo "::error::No screenshot produced"; exit 1; }
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: |
+            shots/
+            run.log
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          VER=$(grep -oP 'project\(glass-browser-desktop VERSION \K[0-9.]+' CMakeLists.txt)
+          R="$GITHUB_REPOSITORY"
+          for t in $(gh release list -R "$R" --json tagName -q '.[].tagName'); do
+            gh release delete "$t" -R "$R" --yes --cleanup-tag || true
+          done
+          PKG=$(ls glass-browser-desktop-*.pkg.tar.zst | head -n1)
+          gh release create "v$VER" "$PKG" shots/shot.png -R "$R" --target "$GITHUB_SHA" \
+            --title "Glass Browser Desktop $VER" --notes-file RELEASE_NOTES.md

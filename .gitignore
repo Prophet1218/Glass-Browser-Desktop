@@ -1,0 +1,6 @@
+build/
+pkg/
+src/build/
+*.pkg.tar.zst
+*.user
+shots/
