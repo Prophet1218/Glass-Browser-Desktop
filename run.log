@@ -1,0 +1,11 @@
+Sandboxing disabled by user.
+Failed to create Vulkan instance: -9
+Failed to create platform Vulkan instance
+[3954:3971:1126/130717.715765:ERROR:../../../qtwebengine/src/3rdparty/chromium/dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+GLX: No DRI3 Extension.
+<Unknown File>: QML QQuickWebEngineProfile: Please use WebEngineProfilePrototype for profile creation from 6.9, as this function will be deprecated in the future releases
+<Unknown File>: QML QQuickWebEngineProfile: Please use WebEngineProfilePrototype for profile creation from 6.9, as this function will be deprecated in the future releases
+GPUInfo not initialized on GpuInfoUpdate
+qrc:/qt/qml/GlassBrowser/qml/Overview.qml:101:21: QML Image: Error transferring https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://example.com&size=64 - server replied with status code 404
+qrc:/qt/qml/GlassBrowser/qml/TabChip.qml:37:9: QML Image: Error transferring https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://example.com&size=64 - server replied with status code 404
+qrc:/qt/qml/GlassBrowser/qml/ListPanel.qml:86:17: QML Image: Error transferring https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://example.com&size=64 - server replied with status code 404
