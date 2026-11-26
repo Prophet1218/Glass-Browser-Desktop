@@ -145,7 +145,7 @@ Item {
                 visible: modelData.sub !== ""
                 anchors.left: t1.right; anchors.leftMargin: 10; anchors.right: parent.right; anchors.rightMargin: 14
                 anchors.verticalCenter: parent.verticalCenter
-                text: "— " + modelData.sub; color: G.subtext; font.pixelSize: 12.5; elide: Text.ElideRight
+                text: "— " + modelData.sub; color: G.subtext; font.pixelSize: 13; elide: Text.ElideRight
             }
             MouseArea {
                 id: ima; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor

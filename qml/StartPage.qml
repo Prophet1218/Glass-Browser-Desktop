@@ -260,7 +260,7 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             elide: Text.ElideRight
             text: tl.title
-            color: G.text; font.pixelSize: 12.5
+            color: G.text; font.pixelSize: 13
         }
         MouseArea {
             id: tma

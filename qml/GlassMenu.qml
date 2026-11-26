@@ -83,9 +83,9 @@ Item {
                 x: 40; anchors.verticalCenter: parent.verticalCenter
                 width: parent.width - 40 - hintT.implicitWidth - 18
                 text: it.dd.text || ""; elide: Text.ElideRight
-                color: it.dd.danger ? "#FF6B6B" : G.text; opacity: it.en ? 1 : 0.4; font.pixelSize: 13.5
+                color: it.dd.danger ? "#FF6B6B" : G.text; opacity: it.en ? 1 : 0.4; font.pixelSize: 14
             }
-            Text { id: hintT; anchors.right: parent.right; anchors.rightMargin: 12; anchors.verticalCenter: parent.verticalCenter; text: it.dd.hint || ""; color: G.subtext; font.pixelSize: 11.5 }
+            Text { id: hintT; anchors.right: parent.right; anchors.rightMargin: 12; anchors.verticalCenter: parent.verticalCenter; text: it.dd.hint || ""; color: G.subtext; font.pixelSize: 12 }
             MouseArea { id: ima; anchors.fill: parent; hoverEnabled: true; enabled: it.en; cursorShape: Qt.PointingHandCursor; onClicked: menu.trigger(it.dd.key) }
         }
     }
@@ -94,14 +94,14 @@ Item {
         Item {
             height: 40
             Ico { name: "zoom"; size: 16; x: 12; anchors.verticalCenter: parent.verticalCenter; opacity: 0.9 }
-            Text { x: 40; anchors.verticalCenter: parent.verticalCenter; text: G.t("Nagyítás", "Zoom"); color: G.text; font.pixelSize: 13.5 }
+            Text { x: 40; anchors.verticalCenter: parent.verticalCenter; text: G.t("Nagyítás", "Zoom"); color: G.text; font.pixelSize: 14 }
             Row {
                 anchors.right: parent.right; anchors.rightMargin: 4; anchors.verticalCenter: parent.verticalCenter
                 spacing: 2
                 GlassButton { icon: "minus"; width: 32; height: 32; onClicked: menu.trigger("zoomOut") }
                 Text {
                     width: 46; height: 32; horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
-                    text: Math.round(menu.zoomValue * 100) + "%"; color: G.text; font.pixelSize: 12.5
+                    text: Math.round(menu.zoomValue * 100) + "%"; color: G.text; font.pixelSize: 13
                     MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: menu.trigger("zoomReset") }
                 }
                 GlassButton { icon: "plus"; width: 32; height: 32; onClicked: menu.trigger("zoomIn") }

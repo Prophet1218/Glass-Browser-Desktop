@@ -136,7 +136,7 @@ SidePanel {
     component Header: Text {
         topPadding: 16; bottomPadding: 4
         color: G.accent
-        font.pixelSize: 12.5; font.weight: Font.Bold
+        font.pixelSize: 13; font.weight: Font.Bold
         font.capitalization: Font.AllUppercase
         font.letterSpacing: 0.8
     }

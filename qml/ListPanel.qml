@@ -92,9 +92,9 @@ SidePanel {
                 Column {
                     x: 42; width: parent.width - 42 - 50
                     anchors.verticalCenter: parent.verticalCenter
-                    Text { width: parent.width; text: r.modelData.title || ""; color: G.text; font.pixelSize: 13.5; elide: Text.ElideRight }
+                    Text { width: parent.width; text: r.modelData.title || ""; color: G.text; font.pixelSize: 14; elide: Text.ElideRight }
                     Text {
-                        width: parent.width; elide: Text.ElideRight; color: G.subtext; font.pixelSize: 11.5
+                        width: parent.width; elide: Text.ElideRight; color: G.subtext; font.pixelSize: 12
                         text: r.modelData.header ? "" : (lp.mode === "history" ? Qt.formatTime(new Date(r.modelData.t), "HH:mm") + "  ·  " : "") + G.prettyUrl(r.modelData.url)
                     }
                 }

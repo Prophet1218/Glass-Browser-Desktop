@@ -50,7 +50,7 @@ SidePanel {
                 x: 64; width: parent.width - 64 - btns.width - 10
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 4
-                Text { width: parent.width; text: row.name; color: G.text; font.pixelSize: 13.5; elide: Text.ElideMiddle }
+                Text { width: parent.width; text: row.name; color: G.text; font.pixelSize: 14; elide: Text.ElideMiddle }
                 Rectangle {
                     visible: row.active
                     width: parent.width; height: 4; radius: 2
