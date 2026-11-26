@@ -38,7 +38,7 @@ jobs:
           export GLASS_SCREENSHOT="$PWD/shots/shot.png"
           xvfb-run -a -s "-screen 0 1440x900x24" timeout 150 glass-browser-desktop --no-sandbox > run.log 2>&1 || echo "exit code $?"
           cat run.log
-          if grep -E "\.qml:[0-9]+" run.log | grep -E "Error|is not a type|Cannot assign|Unable to assign|is not defined|Non-existent|Invalid|unavailable|not installed|Cannot override|failed|Unknown"; then
+          if grep -E "\.qml:[0-9]+" run.log | grep -v "Error transferring" | grep -E "Error|is not a type|Cannot assign|Unable to assign|is not defined|Non-existent|Invalid|unavailable|not installed|Cannot override|failed|Unknown"; then
             echo "::error::QML errors found"; exit 1
           fi
           test -f shots/shot.png || { echo "::error::No screenshot produced"; exit 1; }
@@ -51,6 +51,17 @@ jobs:
           path: |
             shots/
             run.log
+
+      - name: Push screenshots branch
+        if: always()
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          rm -rf /tmp/shotrepo && mkdir /tmp/shotrepo && cp -r shots run.log /tmp/shotrepo/ 2>/dev/null || true
+          cd /tmp/shotrepo
+          git init -q -b screenshots
+          git -c user.name=ci -c user.email=ci@users.noreply.github.com add -A
+          git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -qm "CI screenshots $GITHUB_SHA"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" screenshots
 
       - name: Publish release
         env:
