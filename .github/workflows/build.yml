@@ -17,7 +17,7 @@ jobs:
         run: |
           pacman -Syu --noconfirm --needed base-devel cmake git github-cli \
             qt6-base qt6-declarative qt6-webengine qt6-shadertools kwindowsystem \
-            xorg-server-xvfb xorg-xauth mesa ttf-dejavu noto-fonts
+            xorg-server-xvfb xorg-xauth mesa ttf-dejavu noto-fonts gdb
 
       - uses: actions/checkout@v4
 
@@ -36,7 +36,7 @@ jobs:
           mkdir -p shots
           export QTWEBENGINE_DISABLE_SANDBOX=1 QT_QPA_PLATFORM=xcb LIBGL_ALWAYS_SOFTWARE=1
           export GLASS_SCREENSHOT="$PWD/shots/shot.png"
-          xvfb-run -a -s "-screen 0 1440x900x24" timeout 120 glass-browser-desktop > run.log 2>&1 || true
+          xvfb-run -a -s "-screen 0 1440x900x24" timeout 150 gdb -q -batch -ex run -ex bt -ex quit --args glass-browser-desktop --no-sandbox > run.log 2>&1 || echo "exit code $?"
           cat run.log
           if grep -E "\.qml:[0-9]+" run.log | grep -E "Error|is not a type|Cannot assign|Unable to assign|is not defined|Non-existent|Invalid|unavailable|not installed|Cannot override|failed|Unknown"; then
             echo "::error::QML errors found"; exit 1
