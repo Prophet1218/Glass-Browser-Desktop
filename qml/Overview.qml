@@ -16,6 +16,7 @@ Item {
     Keys.onEscapePressed: open = false
     focus: open
 
+    Rectangle { anchors.fill: parent; color: G.tintColor; opacity: 0.55 * ov.fade }
     Glass {
         anchors.fill: parent
         source: ov.source

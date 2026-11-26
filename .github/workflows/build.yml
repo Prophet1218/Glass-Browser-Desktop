@@ -34,7 +34,7 @@ jobs:
         run: |
           pacman -U --noconfirm ./*.pkg.tar.zst
           mkdir -p shots
-          export QTWEBENGINE_DISABLE_SANDBOX=1 QT_QPA_PLATFORM=xcb LIBGL_ALWAYS_SOFTWARE=1 QT_FORCE_STDERR_LOGGING=1
+          export QTWEBENGINE_DISABLE_SANDBOX=1 QT_QPA_PLATFORM=xcb LIBGL_ALWAYS_SOFTWARE=1 QT_FORCE_STDERR_LOGGING=1 QTWEBENGINE_CHROMIUM_FLAGS="--disable-gpu --disable-gpu-compositing"
           export GLASS_SCREENSHOT="$PWD/shots/shot.png"
           xvfb-run -a -s "-screen 0 1440x900x24" timeout 150 glass-browser-desktop --no-sandbox > run.log 2>&1 || echo "exit code $?"
           cat run.log

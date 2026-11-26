@@ -22,11 +22,13 @@ Item {
         live: root.live && root.source !== null
         hideSource: false
         visible: false
-        mipmap: true
+        mipmap: false
         smooth: true
         recursive: false
-        textureSize: Qt.size(Math.max(1, Math.round((root.width + 2 * root.pad) * 0.75)),
-                             Math.max(1, Math.round((root.height + 2 * root.pad) * 0.75)))
+        // erősebb elmosásnál kisebb felbontásban készül a háttér: olcsóbb és simább
+        readonly property real k: root.blur > 2 ? Math.max(0.16, Math.min(0.8, 7 / root.blur)) : 1
+        textureSize: Qt.size(Math.max(1, Math.round((root.width + 2 * root.pad) * k)),
+                             Math.max(1, Math.round((root.height + 2 * root.pad) * k)))
     }
 
     // a forrás téglalap minden képkockán követi a felület helyét (mozgás, animáció közben is)

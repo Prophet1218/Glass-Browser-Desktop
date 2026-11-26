@@ -25,15 +25,14 @@ float sdRoundRect(vec2 p, vec2 b, float r) {
 }
 
 vec4 sampleBlur(vec2 uv, vec2 texel, float r) {
-    // 13 mintavétel két gyűrűn + középen; a mipmap szint tovább simít
-    float lod = log2(max(r * 0.35, 1.0));
-    vec4 acc = textureLod(src, uv, lod) * 2.0;
+    // 13 mintavétel két gyűrűn + középen (a forrás már kicsinyítve készül, ez tovább simít)
+    vec4 acc = texture(src, uv) * 2.0;
     float w = 2.0;
     for (int i = 0; i < 6; i++) {
         float a = float(i) * 1.0471976;
         vec2 d = vec2(cos(a), sin(a));
-        acc += textureLod(src, uv + d * texel * r * 0.5, lod);
-        acc += textureLod(src, uv + d.yx * vec2(1.0, -1.0) * texel * r, lod) * 0.8;
+        acc += texture(src, uv + d * texel * r * 0.5);
+        acc += texture(src, uv + d.yx * vec2(1.0, -1.0) * texel * r) * 0.8;
         w += 1.8;
     }
     return acc / w;
